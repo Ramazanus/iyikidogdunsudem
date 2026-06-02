@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi Ki Doğdun Sevgilim | Seninle ♡</title>
+    
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="Hayatımın anlamı, iyi ki doğdun. Seni çok seviyorum!">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Scroll Progress Indicator -->
+    <div id="scroll-progress-bar"></div>
+
+    <!-- Background Particle Canvas -->
+    <canvas id="bg-particles"></canvas>
+
+    <!-- Custom Cursor Hearts Layer -->
+    <div id="cursor-trail-container"></div>
+
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-heart">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+            <h2 class="loader-text">Seninle...</h2>
+            <div class="loader-bar-container">
+                <div id="loader-progress"></div>
+            </div>
+            <p id="loader-percentage">0%</p>
+        </div>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="main-header">
+        <div class="header-logo">
+            Seninle <span class="logo-heart">♡</span>
+        </div>
+        <div class="header-controls">
+            <button id="music-toggle" class="btn-control" aria-label="Müziği Aç/Kapat" title="Arka Plan Müziği">
+                <i class="fa-solid fa-music"></i>
+                <span class="music-wave-bar bar-1"></span>
+                <span class="music-wave-bar bar-2"></span>
+                <span class="music-wave-bar bar-3"></span>
+            </button>
+            <button id="favorite-toggle" class="btn-control" aria-label="Kalp Atışı" title="Seni Seviyorum">
+                <i class="fa-solid fa-heart pulsing-heart-icon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="container hero-container">
+            <div class="hero-text-content">
+                <span class="hero-pretitle">♥ İYİ Kİ DOĞDUN, İYİ Kİ BENİM OLDUN SUDEM ♥</span>
+                <h1 class="hero-title">İyi ki doğdun benim kalbimin en güzel yeri <span class="accent-heart">♡</span></h1>
+                <p class="hero-desc">Hayatımın anlamı, gülüşümün sebebi, iyi ki doğdun. Seni çok seviyorum!</p>
+                
+                <div class="title-divider">
+                    <span class="divider-line"></span>
+                    <i class="fa-solid fa-heart divider-heart"></i>
+                    <span class="divider-line"></span>
+                </div>
+                
+                <div class="hero-cta-wrapper">
+                    <button class="btn-primary" id="btn-open-heart">
+                        <i class="fa-solid fa-heart-open"></i> Kalbime Dokun
+                    </button>
+                    <!-- Hand-drawn SVG Arrow pointing from button to 3D heart -->
+                    <div class="handdrawn-arrow-container">
+                        <svg class="handdrawn-arrow" width="120" height="60" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 10C30 15 50 35 75 42C85 45 95 40 102 30" stroke="#e66767" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 4" />
+                            <path d="M92 32L102 30L99 20" stroke="#e66767" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span class="arrow-note">Sana özel bir sürpriz var</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual-content">
+                <!-- Three.js 3D Heart Container -->
+                <div id="heart-3d-container"></div>
+                <!-- Ambient floaters around the 3D heart -->
+                <div class="glow-effect"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hidden Surprise/Message Modal Card -->
+    <div id="surprise-modal" class="modal-overlay">
+        <div class="modal-card-container">
+            <button id="btn-close-surprise" class="btn-close" aria-label="Kapat">&times;</button>
+            <div class="modal-card">
+                <div class="modal-photo-side">
+                    <div class="photo-placeholder-polaroid">
+                        <div class="polaroid-image">
+                            <img src="pictures/A1.jpeg" alt="En Güzel Günümüz" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <p class="polaroid-caption">En Güzel Günümüz ♡</p>
+                    </div>
+                </div>
+                <div class="modal-text-side">
+                    <h3 class="modal-letter-title">Sevgilime Mektup...</h3>
+                    <div class="modal-letter-content">
+                        <p id="typewriter-text"></p>
+                    </div>
+                    <div class="modal-letter-signature">Sonsuza dek senin, aşkın...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memory Sections -->
+    <section class="memories-section" id="memories">
+        
+        <!-- Memory 1: Photo Right / Text Left -->
+        <div class="memory-row" id="memory-1">
+            <div class="container memory-container">
+                <div class="memory-text">
+                    <span class="memory-num">♥ 01</span>
+                    <h2 class="memory-title">Seninle Her Anım Bir Hazine</h2>
+                    <p class="memory-desc">
+						İyi ki doğdun aşkım ❤️
+
+						Hayatıma girdiğin günden beri geçen her an, kalbimde sakladığım en değerli hazine oldu. Senin gülüşün, sesin, bakışların ve bana hissettirdiğin sevgi, dünyadaki hiçbir şeyle ölçülemeyecek kadar kıymetli.
+
+						Seninle geçen her gün, bana aşkın en güzel halini öğretiyor. Bazen bir bakışınla, bazen tek bir sözünle bütün dünyamı aydınlatıyorsun. Bu yüzden seninle yaşadığım her anı ömrüm boyunca saklamak istediğim bir hazine gibi görüyorum.
+
+						Bugün senin doğum günün ama aslında kutlanması gereken şey, senin bu dünyaya gelişin ve benim hayatıma dokunuşun. İyi ki doğdun, iyi ki varsın, iyi ki kalbimin en güzel köşesinde yer alan kişi oldun.
+
+						Yeni yaşında tüm hayallerin gerçekleşsin, yüzündeki o güzel gülümseme hiç eksilmesin. Ben ise her yeni yaşında yanında olup seni ilk günkü heyecanla sevmeye devam edeyim.
+
+						Seni dün sevdiğimden daha çok, yarın seveceğimden ise biraz daha az seviyorum.
+
+						Doğum günün kutlu olsun sevgilim. ❤️🎂✨
+						.</p>
+                </div>
+                <div class="memory-visual">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" style="border: none; background: transparent;">
+                            <img src="pictures/A2.jpeg" alt="Hazine Anımız" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-heart floating-element fe-1"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memory 2: Photo Left / Text Right -->
+        <div class="memory-row row-reverse" id="memory-2">
+            <div class="container memory-container">
+                <div class="memory-text">
+                    <span class="memory-num">♥ 02</span>
+                    <h2 class="memory-title">Gülüşün Her Şeyi Daha Güzel Yapıyor</h2>
+                    <p class="memory-desc">
+						İyi ki doğdun sevgilim ❤️
+
+						Gülüşün her şeyi daha güzel, hayatımı ise daha anlamlı yapıyor. Seninle geçen her an kalbimde sakladığım en değerli hazine. Yeni yaşın, yüzündeki o eşsiz gülümseme kadar güzel ve mutluluk dolu olsun.
+
+						Seni çok seviyorum. 🎂✨❤️
+					</p>
+                </div>
+                <div class="memory-visual">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" style="border: none; background: transparent;">
+                            <img src="pictures/A3.jpeg" alt="Gülüşün" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-sparkles floating-element fe-2"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memory 3: Photo Right / Text Left -->
+        <div class="memory-row" id="memory-3">
+            <div class="container memory-container">
+                <div class="memory-text">
+                    <span class="memory-num">♥ 03</span>
+                    <h2 class="memory-title">Yanımda Olduğun İçin Minnettarım</h2>
+                    <p class="memory-desc">
+						İyi ki doğdun aşkım ❤️
+
+						Hayatımın her anında yanımda olduğun, bana güç verdiğin ve sevgini hissettirdiğin için sana minnettarım. Varlığın en zor günleri kolaylaştıran, en güzel günleri ise unutulmaz kılan bir mucize gibi.
+
+						İyi ki varsın, iyi ki benimlesin. Yeni yaşın mutluluk, huzur ve aşkımız kadar güzel olsun. 🎂✨❤️
+					
+					</p>
+                </div>
+                <div class="memory-visual">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" style="border: none; background: transparent;">
+                            <img src="pictures/A4.jpeg" alt="Yanımda Olduğun İçin" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-heart floating-element fe-3"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Memory 4: Photo Left / Text Right -->
+        <div class="memory-row row-reverse" id="memory-4">
+            <div class="container memory-container">
+                <div class="memory-text">
+                    <span class="memory-num">♥ 04</span>
+                    <h2 class="memory-title">Birlikte Nice Güzel Yıllarımıza</h2>
+                    <p class="memory-desc">
+						İyi ki doğdun Sude'm ❤️
+
+						Seninle geçen her gün, hayatımın en güzel anılarına dönüşüyor. Birlikte güldüğümüz, hayaller kurduğumuz ve sevgimizi büyüttüğümüz her an için çok mutluyum.
+
+						Bugün yeni yaşını kutlarken, kalbim tek bir dilekle dolu: El ele, omuz omuza, sevgiyle birlikte nice güzel yıllara...
+
+						İyi ki varsın, iyi ki hayatımdasın. Seni çok seviyorum. ❤️🎂✨
+						.</p>
+                </div>
+                <div class="memory-visual">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder" style="border: none; background: transparent;">
+                            <img src="pictures/A5.jpeg" alt="Birlikte Yıllarımıza" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-sparkles floating-element fe-4"></i>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- NEW SECTION: Why Happy Birthday (Neden İyi Ki Doğdun?) -->
+    <section class="reasons-section" id="why-birthday-section">
+        <canvas id="reasons-particles-canvas"></canvas>
+        <div class="container reasons-container">
+            <div class="reasons-header">
+                <span class="reasons-subtitle">Seni Sevmek İçin Sonsuz Nedenim Var</span>
+                <h2 class="reasons-title">Neden İyi Ki Doğdun?</h2>
+            </div>
+            
+            <div class="reasons-card-wrapper">
+                <div class="reasons-card" id="reasons-card-box">
+                    <div class="card-glow"></div>
+                    <div class="reason-number" id="reason-num-display">Sebep #1</div>
+                    <p class="reason-text" id="reason-text-display">Çünkü gülüşün en kötü günümü bile güzelleştiriyor.</p>
+                </div>
+                
+                <button class="btn-primary btn-reason-pulse" id="btn-next-reason">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Bir Sebep Gör
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slider Section: En Güzel Anılarımız -->
+    <section class="slider-section" id="gallery">
+        <div class="container slider-header-container">
+            <span class="slider-subtitle">Birlikte Biriktirdiğimiz</span>
+            <h2 class="slider-title">♡ En Güzel Anılarımız ♡</h2>
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel-track-container">
+                <ul class="carousel-track">
+                    
+                    <!-- Slide 1 -->
+                    <li class="carousel-slide current-slide">
+                        <div class="slide-card">
+                            <div class="slide-photo-area">
+                                <div class="photo-placeholder" style="border: none; background: transparent;">
+                                    <img src="pictures/A6.jpeg" alt="Anı 1" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                </div>
+                            </div>
+                            <div class="slide-text-area">
+                                <i class="fa-solid fa-quote-left quote-icon"></i>
+                                <p class="slide-quote">
+									Oyun parkındaki o çocuksu hallerin... ❤️
+
+									Seni izlerken yüzündeki samimi mutluluğu görmek, kalbimi tarifsiz bir şekilde ısıtıyor. İçindeki o neşeyi, heyecanı ve hayata çocuk gibi bakabilmeni çok seviyorum. Salıncakta gülerken ya da eğlenirken gözlerindeki ışık, benim için dünyanın en güzel manzaralarından biri.
+
+									İçindeki o güzel çocuğu hiç kaybetme. Çünkü seni sen yapan en özel şeylerden biri de bu. ❤️✨
+								</p>
+                                <div class="slide-heart"><i class="fa-solid fa-heart"></i></div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Slide 2 -->
+                    <li class="carousel-slide">
+                        <div class="slide-card">
+                            <div class="slide-photo-area">
+                                <div class="photo-placeholder" style="border: none; background: transparent;">
+                                    <img src="pictures/A7.jpeg" alt="Anı 2" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                </div>
+                            </div>
+                            <div class="slide-text-area">
+                                <i class="fa-solid fa-quote-left quote-icon"></i>
+                                <p class="slide-quote">
+									Dizinde başımı dinlendirdiğim o anlar, kendimi en huzurlu ve en güvende hissettiğim anlar oldu. Dünyanın tüm karmaşası arasında senin yanında olmak, bana tarif edemediğim bir mutluluk veriyor.
+
+									İyi ki varsın, iyi ki hayatımdasın. Daha birlikte yaşayacağımız nice güzel anılara ve dizinde huzur bulacağım nice günlere... ❤️✨
+								</p>
+                                <div class="slide-heart"><i class="fa-solid fa-heart"></i></div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <!-- Slide 3 -->
+                    <li class="carousel-slide">
+                        <div class="slide-card">
+                            <div class="slide-photo-area">
+                                <div class="photo-placeholder" style="border: none; background: transparent;">
+                                    <img src="pictures/A8.jpeg" alt="Anı 3" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+                                </div>
+                            </div>
+                            <div class="slide-text-area">
+                                <i class="fa-solid fa-quote-left quote-icon"></i>
+                                <p class="slide-quote">
+									Gözlerin... ❤️
+
+									Bazen tek bir bakışın bile bütün günümü güzelleştirmeye yetiyor. O güzel gözlerinde huzuru, sevgiyi ve kendimi buluyorum. Ne zaman gözlerine baksam, neden sana bu kadar bağlı olduğumu bir kez daha hatırlıyorum.
+
+									İyi ki o güzel gözlerin hayatıma ışık oldu. İyi ki varsın sevgilim. ❤️✨
+								</p>
+                                <div class="slide-heart"><i class="fa-solid fa-heart"></i></div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <!-- Glassmorphism Navigation Controls -->
+            <button class="carousel-button button-left" id="btn-slide-left" aria-label="Önceki Slayt">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button class="carousel-button button-right" id="btn-slide-right" aria-label="Sonraki Slayt">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+
+            <!-- Animated Pagination Indicators -->
+            <div class="carousel-nav">
+                <button class="carousel-indicator current-indicator" aria-label="Slayt 1"></button>
+                <button class="carousel-indicator" aria-label="Slayt 2"></button>
+                <button class="carousel-indicator" aria-label="Slayt 3"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="romantic-footer">
+        <!-- Background elements for Footer -->
+        <div class="footer-decorations">
+            <!-- Left: Open Envelope with Hearts flying out -->
+            <div class="decor-envelope-container">
+                <svg class="envelope-svg" viewBox="0 0 100 80" width="120" height="96" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Envelope Back/Bottom -->
+                    <path d="M5 25 L5 75 L95 75 L95 25 L50 55 Z" fill="#fce4ec" stroke="#f8a5c2" stroke-width="2" />
+                    <!-- Envelope Open Flap -->
+                    <path d="M5 25 L50 2 L95 25" fill="#f8d7da" stroke="#f8a5c2" stroke-width="2" />
+                    <!-- Inner Pocket shadow -->
+                    <path d="M5 75 L50 55 L95 75" fill="none" stroke="#f8a5c2" stroke-dasharray="2 2" />
+                </svg>
+                <div class="envelope-hearts">
+                    <i class="fa-solid fa-heart eh-1"></i>
+                    <i class="fa-solid fa-heart eh-2"></i>
+                    <i class="fa-solid fa-heart eh-3"></i>
+                </div>
+            </div>
+
+            <!-- Right: Glass Jar with Hearts -->
+            <div class="decor-jar-container">
+                <svg class="jar-svg" viewBox="0 0 80 120" width="96" height="144" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Jar Lid -->
+                    <rect x="25" y="5" width="30" height="8" rx="2" fill="#c084fc" opacity="0.8" stroke="#a855f7" stroke-width="1.5" />
+                    <!-- Jar Cork/Neck -->
+                    <rect x="28" y="13" width="24" height="6" fill="#d97706" />
+                    <!-- Jar Body (Glass glassmorphism style) -->
+                    <path d="M28 19 C20 22 15 30 15 45 L15 105 C15 112 22 115 40 115 C58 115 65 112 65 105 L65 45 C65 30 60 22 52 19 Z" fill="rgba(255, 255, 255, 0.2)" stroke="rgba(255, 107, 129, 0.4)" stroke-width="2.5" />
+                    <!-- Reflections -->
+                    <path d="M22 45 C22 35 25 28 30 25" fill="none" stroke="white" stroke-width="1.5" opacity="0.6" />
+                    <line x1="60" y1="45" x2="60" y2="95" stroke="white" stroke-width="1" opacity="0.3" />
+                </svg>
+                <div class="jar-hearts">
+                    <i class="fa-solid fa-heart jh-1"></i>
+                    <i class="fa-solid fa-heart jh-2"></i>
+                    <i class="fa-solid fa-heart jh-3"></i>
+                    <i class="fa-solid fa-heart jh-4"></i>
+                    <i class="fa-solid fa-heart jh-5"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="container footer-container">
+            <span class="footer-subtitle">SON OLARAK ŞUNU BİLMENİ İSTİYORUM</span>
+            <h2 class="footer-title">Seni çok seviyorum</h2>
+            
+            <div class="footer-button-wrapper">
+                <button class="btn-primary btn-capsule" id="btn-forever">
+                    <i class="fa-solid fa-heart-pulse"></i> Sonsuza Kadar Seninleyim
+                </button>
+            </div>
+            
+            <div class="footer-credits">
+                İyi ki doğdun aşkım ❤️ | 07.02.2025
+            </div>
+        </div>
+    </footer>
+
+    <!-- Audio Player (hidden, handles music loading) -->
+    <audio id="bg-audio" loop preload="auto" autoplay>
+        <source src="Co2.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-84.wav" type="audio/wav">
+    </audio>
+
+    <!-- GSAP for Smooth Scroll & Complex Animation Orchestration -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js for 3D Rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="script.js"></script>
+    <script src="heart3d.js"></script>
+</body>
+</html>
